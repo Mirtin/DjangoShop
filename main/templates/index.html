@@ -7,6 +7,40 @@
 {% block links %}<link href="{% static 'index/css/styles.css' %}" rel="stylesheet" />{% endblock %}
 
 {% block section %}
+        <script type="text/javascript">
+            function addStar (placer) {
+                const star = document.createElement('div');
+                star.className = 'bi-star-fill';
+                placer.appendChild(star);
+                }
+
+            function addHalfStar (placer) {
+                const half_star = document.createElement('div');
+                half_star.className = 'bi-star-half';
+                placer.appendChild(half_star);
+                }
+
+            function addHollowStar (placer) {
+                const hollow_star = document.createElement('div');
+                hollow_star.className = 'bi-star';
+                placer.appendChild(hollow_star);
+                }
+
+            function createN (id, n){
+                const placer = document.getElementById(id);
+
+                for (let i = 0; i < Math.floor(n); i++){
+                    addStar(placer);
+                    }
+                if (n - Math.floor(n) != 0) {
+                    addHalfStar(placer);
+                    }
+                for (let i = 0; i < 5-Math.ceil(n); i++){
+                    addHollowStar(placer);
+                    }
+                }
+
+        </script>
         <!-- Section-->
         <section class="py-5">
             <form action="{% url '/' %}" method="get">
@@ -27,7 +61,7 @@
             </form>
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {% for product in products%}
+                    {% for product in products %}
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
@@ -42,14 +76,13 @@
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ product.name }}</h5>
                                     <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
+                                    <div id="{{ product.id }}_placer" class="d-flex justify-content-center small text-warning mb-2">
+                                        <!-- <div class="bi-star-fill"></div> -->
+                                        <!-- <div class="bi-star-half"></div> -->
+                                        <!-- <div class="bi-star"></div> -->
+                                        <script>createN('{{ product.id }}_placer', {{ product.average_rating }});</script>
                                     </div>
-                                    <!-- Product price-->
+                                    <!-- Product price -->
                                     {% if product.discount != 0 %}
                                     <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
                                     ${{ product.calc_price }}
@@ -69,4 +102,5 @@
             </div>
 
         </section>
+
 {% endblock %}

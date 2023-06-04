@@ -14,12 +14,11 @@ def main(request):
     input_bar = ''
     if request.method == 'GET':
         query = request.GET.get('q')
-        if request.GET.get('category'):
+        if query:
             cat_id = CategoryTable.objects.get(category=request.GET.get('category'))
             products = ProductTable.objects.filter(name__icontains=query, cat_id=cat_id)
-        if query:
-            products = ProductTable.objects.filter(name__icontains=query)
             input_bar = query
+
     context = {
         'products': products,
         'input_bar': input_bar,
