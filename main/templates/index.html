@@ -7,40 +7,9 @@
 {% block links %}<link href="{% static 'index/css/styles.css' %}" rel="stylesheet" />{% endblock %}
 
 {% block section %}
-        <script type="text/javascript">
-            function addStar (placer) {
-                const star = document.createElement('div');
-                star.className = 'bi-star-fill';
-                placer.appendChild(star);
-                }
 
-            function addHalfStar (placer) {
-                const half_star = document.createElement('div');
-                half_star.className = 'bi-star-half';
-                placer.appendChild(half_star);
-                }
+<script type="text/javascript" src="{% static 'index/js/script.js' %}"></script>
 
-            function addHollowStar (placer) {
-                const hollow_star = document.createElement('div');
-                hollow_star.className = 'bi-star';
-                placer.appendChild(hollow_star);
-                }
-
-            function createN (id, n){
-                const placer = document.getElementById(id);
-
-                for (let i = 0; i < Math.floor(n); i++){
-                    addStar(placer);
-                    }
-                if (n - Math.floor(n) != 0) {
-                    addHalfStar(placer);
-                    }
-                for (let i = 0; i < 5-Math.ceil(n); i++){
-                    addHollowStar(placer);
-                    }
-                }
-
-        </script>
         <!-- Section-->
         <section class="py-5">
             <form action="{% url '/' %}" method="get">
