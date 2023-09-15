@@ -48,3 +48,7 @@ def rate(request, product_id, rating):
 
     rating.save()
     return redirect(f'product/{product_id}')
+
+
+def about_page(request):
+    return render(request, 'about.html')
