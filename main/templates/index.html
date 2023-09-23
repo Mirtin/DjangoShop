@@ -4,7 +4,10 @@
 {% load static %}
 
 {% block title %}Main Page{% endblock %}
-{% block links %}<link href="{% static 'index/css/styles.css' %}" rel="stylesheet" />{% endblock %}
+{% block links %}
+<link href="{% static 'index/css/styles.css' %}" rel="stylesheet" />
+<link href="{% static 'index/css/pagination.css' %}" rel="stylesheet" />
+{% endblock %}
 
 {% block section %}
 <script src="{% static 'index/js/script.js' %}"></script>
@@ -68,7 +71,18 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class="pagination">
+                <a href="#">&laquo;</a>
+                <a href="#">1</a>
+                <a href="#" class="active">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">&raquo;</a>
+            </div>
 
         </section>
+
 
 {% endblock %}
