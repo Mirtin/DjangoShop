@@ -1,23 +1,26 @@
+import math
+
 from django.shortcuts import render
 
 import requests
 
 
-PAGE_SIZE = 1
+PER_PAGE = 2
 
 
 # Create your views here.
 
 def pagination(request, page):
-    end = page * PAGE_SIZE
-    start = end - PAGE_SIZE
-    print(start, end)
-    products = requests.get(f'http://localhost:8080/operations/get_products/{start}/{end}').json()["products"]
+    skip = PER_PAGE * (page-1)
+
+    products = requests.get(f'http://localhost:8080/operations/get_products/{skip}/{PER_PAGE}').json()["products"]
+    count = requests.get('http://localhost:8080/operations/get_pages_count/').json()[0]["count"]
+    pagination_length = math.ceil(count/PER_PAGE)
     for product in products:
         if product["discount"] != 0:
             product["calculated_price"] = product["price"] - (product["price"] * product["discount"] / 100)
     context = {"products": products,
-               "pagination_length": range(1, 6),
+               "pagination_length": range(1, pagination_length+1),
                "page": page,
                }
     return render(request, "pagination.html", context)
