@@ -1,14 +1,19 @@
 import math
 
+from django.http import HttpResponse
 from django.shortcuts import render
 
 import requests
 
+from cryptography.fernet import Fernet
+
+from config import settings
 
 PER_PAGE = 2
 
+key = bytes(settings.ENCRYPTION_KEY, 'utf-8')
+fernet = Fernet(key)
 
-# Create your views here.
 
 def pagination(request, page):
     skip = PER_PAGE * (page-1)
@@ -23,7 +28,7 @@ def pagination(request, page):
                "pagination_length": range(1, pagination_length+1),
                "page": page,
                }
-    return render(request, "pagination.html", context)
+    return render(request, 'pagination.html', context)
 
 
 def product_page(request, product_id):
@@ -31,8 +36,15 @@ def product_page(request, product_id):
     context = {
         "product": product
     }
-    return render(request, "product_page.html", context)
+    return render(request, 'product_page.html', context)
+
+
+def add_rating(request):
+    data = b'word'
+    token = fernet.encrypt(data).decode()
+    response = requests.post(f'http://localhost:8080/rating/add_rating/{token}').json()
+    return HttpResponse(str(response))
 
 
 def about_page(request):
-    return render(request, "about.html")
+    return render(request, 'about.html')
