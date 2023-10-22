@@ -32,11 +32,11 @@
                         </a>
 
                         {% if request.user == 'AnonymousUser' %}
-                        <a class="btn btn-outline-dark" href="accounts/login">
+                        <a class="btn btn-outline-dark" href="/accounts/login">
                             {{ request.user }}
                         </a>
                         {% else %}
-                        <a class="btn btn-outline-dark" href="accounts/logout">
+                        <a class="btn btn-outline-dark" href="/accounts/logout">
                             {{ request.user }}
                         {% endif %}
                         </a>

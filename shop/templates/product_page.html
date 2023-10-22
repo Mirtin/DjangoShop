@@ -11,7 +11,7 @@
 
 {% block section %}
 <script src="{% static 'product_page/js/script.js' %}"></script>
-<script src="{% static 'product_page/js/calculate_price.js' %}"></script>
+
 
         <section class="py-5">
             <div class="container px-4 px-lg-5 my-5">
@@ -23,17 +23,17 @@
                         <div class="fs-5 mb-5" >
                             {% if product.discount != 0 %}
                                     <span  class="text-decoration-line-through">{{ product.price }} {{ product.currency_code.code }}</span>
-                                    <span>${{ product.calculated_price  }}</span>
+                                    <span>${{ product.calculated_price }}</span>
                             {% else %}
                             {{ product.price }} {{ product.currency_code.code }}
                             {% endif %}
                         <h3>Avg rating {{ product.average_rating }}</h3>
                         <ul class="btn btn-light list-inline rating-list">
-                            <li onclick="rate(5, {{ product.id }})"><i class="fa fa-regular fa-star"></i></li>
-                            <li onclick="rate(4, {{ product.id }})"><i class="fa fa-regular fa-star"></i></li>
-                            <li onclick="rate(3, {{ product.id }})"><i class="fa fa-regular fa-star"></i></li>
-                            <li onclick="rate(2, {{ product.id }})"><i class="fa fa-regular fa-star"></i></li>
-                            <li onclick="rate(1, {{ product.id }})"><i class="fa fa-regular fa-star"></i></li>
+                            <li onclick="rate(5, {{ product.id }}, {{ user.id }})"><i class="fa fa-regular fa-star"></i></li>
+                            <li onclick="rate(4, {{ product.id }}, {{ user.id }})"><i class="fa fa-regular fa-star"></i></li>
+                            <li onclick="rate(3, {{ product.id }}, {{ user.id }})"><i class="fa fa-regular fa-star"></i></li>
+                            <li onclick="rate(2, {{ product.id }}, {{ user.id }})"><i class="fa fa-regular fa-star"></i></li>
+                            <li onclick="rate(1, {{ product.id }}, {{ user.id }})"><i class="fa fa-regular fa-star"></i></li>
                         </ul>
                             <p class="lead">{{ product.description }}</p>
                         </div>

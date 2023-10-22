@@ -1,3 +1,4 @@
+import json
 import math
 
 from django.http import HttpResponse
@@ -7,6 +8,8 @@ import requests
 
 from cryptography.fernet import Fernet
 
+from django.views.decorators.csrf import csrf_exempt
+
 from config import settings
 
 PER_PAGE = 2
@@ -15,8 +18,8 @@ key = bytes(settings.ENCRYPTION_KEY, 'utf-8')
 fernet = Fernet(key)
 
 
-def pagination(request, page):
-    skip = PER_PAGE * (page-1)
+def page(request, page_number):
+    skip = PER_PAGE * (page_number - 1)
 
     products = requests.get(f'http://localhost:8080/operations/get_products/{skip}/{PER_PAGE}').json()["products"]
     count = requests.get('http://localhost:8080/operations/get_pages_count/').json()[0]["count"]
@@ -26,7 +29,7 @@ def pagination(request, page):
             product["calculated_price"] = product["price"] - (product["price"] * product["discount"] / 100)
     context = {"products": products,
                "pagination_length": range(1, pagination_length+1),
-               "page": page,
+               "page_number": page_number,
                }
     return render(request, 'pagination.html', context)
 
@@ -39,9 +42,11 @@ def product_page(request, product_id):
     return render(request, 'product_page.html', context)
 
 
-def add_rating(request):
-    data = b'word'
-    token = fernet.encrypt(data).decode()
+@csrf_exempt
+def add_rating(request, page_number):
+    data = request.body.decode()
+    user_encode_data = json.dumps(data).encode('utf-8')
+    token = fernet.encrypt(user_encode_data).decode()
     response = requests.post(f'http://localhost:8080/rating/add_rating/{token}').json()
     return HttpResponse(str(response))
 
