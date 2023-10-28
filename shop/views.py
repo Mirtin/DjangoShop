@@ -36,8 +36,10 @@ def page(request, page_number):
 
 def product_page(request, product_id):
     product = requests.get(f'http://localhost:8080/operations/get_product/{product_id}').json()["product"][0]
+    average_rating = requests.get(f'http://localhost:8080/rating/get_average_rating/{product_id}').json()["average_rating"]
     context = {
-        "product": product
+        "product": product,
+        "average_rating": average_rating
     }
     return render(request, 'product_page.html', context)
 

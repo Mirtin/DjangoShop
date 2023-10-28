@@ -27,7 +27,7 @@
                             {% else %}
                             {{ product.price }} {{ product.currency_code.code }}
                             {% endif %}
-                        <h3>Avg rating {{ product.average_rating }}</h3>
+                        <h3>Average rating {{ average_rating }}</h3>
                         <ul class="btn btn-light list-inline rating-list">
                             <li onclick="rate(5, {{ product.id }}, {{ user.id }})"><i class="fa fa-regular fa-star"></i></li>
                             <li onclick="rate(4, {{ product.id }}, {{ user.id }})"><i class="fa fa-regular fa-star"></i></li>
