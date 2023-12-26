@@ -21,10 +21,12 @@ fernet = Fernet(key)
 def page(request, page_number):
     skip = PER_PAGE * (page_number - 1)
 
-    products = requests.get(f'http://localhost:8080/operations/get_products/{skip}/{PER_PAGE}').json()["products"]
-    count = requests.get('http://localhost:8080/operations/get_pages_count/').json()[0]["count"]
+    products_response = requests.get(f'http://localhost:8080/operations/get_products/{skip}/{PER_PAGE}').json()
+    products = products_response["products"]
+    count = requests.get('http://localhost:8080/operations/get_pages_count/').json()["count"]
     pagination_length = math.ceil(count/PER_PAGE)
-    for product in products:
+    for product, data in products.items():
+        product = data
         if product["discount"] != 0:
             product["calculated_price"] = product["price"] - (product["price"] * product["discount"] / 100)
     context = {"products": products,
@@ -35,7 +37,7 @@ def page(request, page_number):
 
 
 def product_page(request, product_id):
-    product = requests.get(f'http://localhost:8080/operations/get_product/{product_id}').json()["product"][0]
+    product = requests.get(f'http://localhost:8080/operations/get_product/{product_id}').json()
     average_rating = requests.get(f'http://localhost:8080/rating/get_average_rating/{product_id}').json()["average_rating"]
     context = {
         "product": product,
