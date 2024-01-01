@@ -40,10 +40,10 @@
                                     </div>
                                     <!-- Product price -->
                                     {% if product.discount != 0 %}
-                                    <span class="text-muted text-decoration-line-through">{{ product.price }} {{ product.currency_code.code }}</span>
-                                    {{ product.calculated_price }} {{ product.currency_code.code }}
+                                    <span class="text-muted text-decoration-line-through">{{ product.price }} {{ product.currency_code }}</span>
+                                    {{ product.calculated_price }} {{ product.currency_code }}
                                     {% else %}
-                                    {{ product.price }} {{ product.currency_code.code }}
+                                    {{ product.price }} {{ product.currency_code }}
                                     {% endif %}
                                 </div>
                             </div>

@@ -23,7 +23,7 @@
                         <div class="fs-5 mb-5" >
                             {% if product.discount != 0 %}
                                     <span  class="text-decoration-line-through">{{ product.price }} {{ product.currency_code.code }}</span>
-                                    <span>${{ product.calculated_price }}</span>
+                                    <span>{{ product.calculated_price }} {{ product.currency_code.code }}</span>
                             {% else %}
                             {{ product.price }} {{ product.currency_code.code }}
                             {% endif %}
