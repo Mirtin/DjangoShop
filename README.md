@@ -10,6 +10,7 @@
 
 - Microservice usage
 - Encryption with fernet
+- javascript usage
 
 ## Authors
 

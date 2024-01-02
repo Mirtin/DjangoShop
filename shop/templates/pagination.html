@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="pagination">
-                <a href="#">&laquo;</a>
+                <a href="/shop/page/{{ pagination_length|first }}">&laquo;</a>
                 {% for i in pagination_length %}
                     {% if i == page %}
                         <a href="/shop/page/{{ i }}/" class="active">{{ i }}</a>
@@ -67,7 +67,7 @@
                     {% endif %}
 
                 {% endfor %}
-                <a href="#">&raquo;</a>
+                <a href="/shop/page/{{ pagination_length|last }}">&raquo;</a>
             </div>
 
         </section>
